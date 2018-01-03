@@ -18,7 +18,7 @@ class Bookshelf extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     BooksAPI.getAll().then((books) => this.setState({
       books: books
     }))
