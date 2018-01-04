@@ -9,6 +9,7 @@ class Search extends Component {
 
     this.state = {
       searchString: '',
+      searchedBooks: [],
       books: []
     }
 
@@ -21,22 +22,15 @@ class Search extends Component {
     if (event.target.value) {
       // setState isn't a promise, and it seems the search() function runs before the state is set
       // so I'm just using event.target.value
-      BooksAPI.search(event.target.value).then((books) => {
-        if (Array.isArray(books)) {
+      BooksAPI.search(event.target.value).then((searchedBooks) => {
+        if (Array.isArray(searchedBooks)) {
           this.setState({
-            books: books
+            searchedBooks: searchedBooks
           });
         }
       })
     }
   }
-
-  // componentDidMount() {
-  //   console.log('didmount')
-  //   BooksAPI.getAll().then((book) => this.setState({
-
-  //   }))
-  // }
 
   render() {
     return (
@@ -49,7 +43,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            <Shelf books={this.state.books} shelves={this.props.shelves}></Shelf>
+            <Shelf books={this.state.searchedBooks} shelves={this.props.shelves}></Shelf>
           </ol>
         </div>
       </div>

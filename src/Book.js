@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
+import * as BooksAPI from './BooksAPI'
+
 
 class ShelfChanger extends Component {
   constructor(props) {
@@ -12,6 +14,9 @@ class ShelfChanger extends Component {
 
   handleChange(event) {
     this.setState({ selected: event.target.value });
+    BooksAPI.update({id: this.props.id}, event.target.value).then((response) => {
+      console.log(response)
+    })
   }
 
   render() {
@@ -40,7 +45,7 @@ class Book extends Component {
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url(" + this.props.book.imageLinks.thumbnail + ")" }}></div>
           <div className="book-shelf-changer">
-            <ShelfChanger selected={this.props.book.shelf} shelves={this.props.shelves}></ShelfChanger>
+            <ShelfChanger selected={this.props.book.shelf} shelves={this.props.shelves} id={this.props.book.id}></ShelfChanger>
           </div>
         </div>
         <div className="book-title">{this.props.book.title}</div>
@@ -49,7 +54,6 @@ class Book extends Component {
     );
   }
 }
-
 
 ShelfChanger.defaultProps = {
   selected: 'none'

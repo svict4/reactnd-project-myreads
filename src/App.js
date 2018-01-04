@@ -28,13 +28,13 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path='/search' render={() => <Search shelves={this.state.shelves}></Search>} />
+        <Route path='/search' render={() => <Search books={this.state.books} shelves={this.state.shelves}></Search>} />
         <Route exact path='/' render={() => (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            {this.state.shelves.map((shelf) => (
+            {this.state.shelves.filter((shelf) => shelf.key !== "none").map((shelf) => (
               <Shelf
                 key={shelf.key}
                 shelf={shelf.key}
