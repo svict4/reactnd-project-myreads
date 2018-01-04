@@ -17,18 +17,26 @@ class Search extends Component {
 
   handleChange(event) {
     this.setState({ searchString: event.target.value })
+
     if (event.target.value) {
       // setState isn't a promise, and it seems the search() function runs before the state is set
       // so I'm just using event.target.value
-      BooksAPI.search(event.target.value).then((books) => this.setState({
-        books: books
-      }))
+      BooksAPI.search(event.target.value).then((books) => {
+        if (Array.isArray(books)) {
+          this.setState({
+            books: books
+          });
+        }
+      })
     }
   }
 
-  componentDidMount() {
-    console.log('didmount')
-  }
+  // componentDidMount() {
+  //   console.log('didmount')
+  //   BooksAPI.getAll().then((book) => this.setState({
+
+  //   }))
+  // }
 
   render() {
     return (

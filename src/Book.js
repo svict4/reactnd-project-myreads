@@ -13,6 +13,7 @@ class ShelfChanger extends Component {
   handleChange(event) {
     this.setState({ selected: event.target.value });
   }
+
   render() {
     return (
       <select value={this.state.selected} onChange={this.handleChange}>
@@ -26,6 +27,13 @@ class ShelfChanger extends Component {
 }
 
 class Book extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: props.selected
+    }
+  }
+
   render() {
     return (
       <div className="book">
@@ -41,5 +49,10 @@ class Book extends Component {
     );
   }
 }
+
+
+ShelfChanger.defaultProps = {
+  selected: 'none'
+};
 
 export default Book;

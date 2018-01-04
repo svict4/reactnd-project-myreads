@@ -1,9 +1,9 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Link, Route } from 'react-router-dom'
-import Bookshelf from './Bookshelf'
 import Search from './Search'
+import Shelf from './Shelf'
+import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
   constructor(props) {
@@ -14,8 +14,15 @@ class BooksApp extends React.Component {
         { title: "Want to Read", key: "wantToRead" },
         { title: "Read", key: "read" },
         { title: "None", key: "none" }
-      ]
+      ],
+      books: []
     }
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => this.setState({
+      books: books
+    }))
   }
 
   render() {
@@ -27,7 +34,15 @@ class BooksApp extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            <Bookshelf shelves={this.state.shelves}></Bookshelf>
+            {this.state.shelves.map((shelf) => (
+              <Shelf
+                key={shelf.key}
+                shelf={shelf.key}
+                title={shelf.title}
+                books={this.state.books.filter(book => book.shelf === shelf.key)}
+                shelves={this.state.shelves}>
+              </Shelf>
+            ))}
             <div className="open-search">
               <Link to="/search">Add a book</Link>
             </div>
