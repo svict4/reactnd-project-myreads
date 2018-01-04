@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
+import Shelf from './Shelf'
 
 class Search extends Component {
   constructor(props) {
@@ -15,14 +16,18 @@ class Search extends Component {
   }
 
   handleChange(event) {
-    this.setState({searchString: event.target.value});
+    this.setState({ searchString: event.target.value })
+    if (event.target.value) {
+      // setState isn't a promise, and it seems the search() function runs before the state is set
+      // so I'm just using event.target.value
+      BooksAPI.search(event.target.value).then((books) => this.setState({
+        books: books
+      }))
+    }
   }
 
   componentDidMount() {
     console.log('didmount')
-    BooksAPI.search(this.state.searchString).then((books) => this.setState({
-      books: books
-    }))
   }
 
   render() {
@@ -36,7 +41,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.books}
+            <Shelf books={this.state.books} shelves={this.props.shelves}></Shelf>
           </ol>
         </div>
       </div>

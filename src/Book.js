@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 
 class ShelfChanger extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +17,7 @@ class ShelfChanger extends Component {
     return (
       <select value={this.state.selected} onChange={this.handleChange}>
         <option value="none" disabled>Move to...</option>
-        {this.props.bookshelves.map(shelf => (
+        {this.props.shelves.map(shelf => (
           <option value={shelf.key} key={shelf.key}>{shelf.title}</option>
         ))}
       </select>
@@ -33,7 +32,7 @@ class Book extends Component {
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url(" + this.props.book.imageLinks.thumbnail + ")" }}></div>
           <div className="book-shelf-changer">
-            <ShelfChanger selected={this.props.book.shelf} bookshelves={this.props.bookshelves}></ShelfChanger>
+            <ShelfChanger selected={this.props.book.shelf} shelves={this.props.shelves}></ShelfChanger>
           </div>
         </div>
         <div className="book-title">{this.props.book.title}</div>
