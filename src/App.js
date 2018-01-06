@@ -25,6 +25,17 @@ class BooksApp extends React.Component {
     }))
   }
 
+  shelfChange(event) {
+    const newShelf = event.target.value
+    BooksAPI.update({id: this.props.id}, newShelfe).then(() => {
+      BooksAPI.getAll().then((books) => {
+        this.setState({
+          books: books
+        })
+      })
+    })
+  }
+
   render() {
     return (
       <div className="app">
