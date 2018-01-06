@@ -25,9 +25,9 @@ class BooksApp extends React.Component {
     }))
   }
 
-  shelfChange(event) {
+  shelfChange = (id, event) => {
     const newShelf = event.target.value
-    BooksAPI.update({id: this.props.id}, newShelfe).then(() => {
+    BooksAPI.update({id}, newShelf).then(() => {
       BooksAPI.getAll().then((books) => {
         this.setState({
           books: books
@@ -39,7 +39,7 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path='/search' render={() => <Search books={this.state.books} shelves={this.state.shelves}></Search>} />
+        <Route path='/search' render={() => <Search books={this.state.books} shelves={this.state.shelves} shelfChange={this.shelfChange} ></Search>} />
         <Route exact path='/' render={() => (
           <div className="list-books">
             <div className="list-books-title">
@@ -51,7 +51,8 @@ class BooksApp extends React.Component {
                 shelf={shelf.key}
                 title={shelf.title}
                 books={this.state.books.filter(book => book.shelf === shelf.key)}
-                shelves={this.state.shelves}>
+                shelves={this.state.shelves}
+                shelfChange={this.shelfChange}>
               </Shelf>
             ))}
             <div className="open-search">

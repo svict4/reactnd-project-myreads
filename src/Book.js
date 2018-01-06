@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as BooksAPI from './BooksAPI'
-
 
 class ShelfChanger extends Component {
   render() {
     return (
-      <select value={this.props.selected} onChange={this.props.handleChange}>
+      <select value={this.props.selected} onChange={(event) => this.props.shelfChange(this.props.bookId, event)}>
         <option value="none" disabled>Move to...</option>
         {this.props.shelves.map(shelf => (
           <option value={shelf.key} key={shelf.key}>{shelf.title}</option>
@@ -20,26 +18,11 @@ ShelfChanger.defaultProps = {
   selected: 'none'
 }
 
-ShelfChanger.propTypes = {
-  onChange: PropTypes.func.isRequired
-}
+// ShelfChanger.propTypes = {
+//   onChange: PropTypes.func.isRequired
+// }
 
 class Book extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: props.selected
-    }
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ selected: event.target.value });
-    BooksAPI.update({id: this.props.id}, event.target.value).then((response) => {
-      console.log(response)
-    })
-  }
-
   render() {
     return (
       <div className="book">
@@ -47,10 +30,10 @@ class Book extends Component {
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url(" + this.props.book.imageLinks.thumbnail + ")" }}></div>
           <div className="book-shelf-changer">
             <ShelfChanger
-              selected={this.props.book.shelf}
+              selected={this.props.shelf}
               shelves={this.props.shelves}
-              id={this.props.book.id}
-              onChange={this.handleChange()}>
+              bookId={this.props.book.id}
+              shelfChange={this.props.shelfChange}>
             </ShelfChanger>
           </div>
         </div>

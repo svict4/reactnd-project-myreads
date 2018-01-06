@@ -9,8 +9,7 @@ class Search extends Component {
 
     this.state = {
       searchString: '',
-      searchedBooks: [],
-      books: []
+      searchedBooks: []
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -43,7 +42,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            <Shelf books={this.state.searchedBooks} shelves={this.props.shelves}></Shelf>
+            <Shelf books={this.state.searchedBooks} allBooks={this.props.books} shelves={this.props.shelves} shelfChange={this.props.shelfChange}></Shelf>
           </ol>
         </div>
       </div>
