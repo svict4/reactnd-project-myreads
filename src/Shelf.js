@@ -27,6 +27,7 @@ class Shelf extends Component {
                   book={book}
                   key={book.id}
                   allShelves={this.props.allShelves}
+                  // checking that non-required prop exists
                   shelf={this.props.allBooks && this.props.allBooks.find(f => f.id === book.id) && this.props.allBooks.find(f => f.id === book.id).shelf}
                   shelfChange={this.props.shelfChange}>
                 </Book>
