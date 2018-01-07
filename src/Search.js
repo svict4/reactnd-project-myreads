@@ -42,7 +42,12 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            <Shelf books={this.state.searchedBooks} allBooks={this.props.books} shelves={this.props.shelves} shelfChange={this.props.shelfChange}></Shelf>
+            <Shelf 
+              books={this.state.searchedBooks}
+              allBooks={this.props.books}
+              allShelves={this.props.allShelves}
+              shelfChange={this.props.shelfChange}>
+            </Shelf>
           </ol>
         </div>
       </div>

@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class ShelfChanger extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      selected: this.props.selected
+    }
+  }
+
   render() {
     return (
-      <select value={this.props.selected} onChange={(event) => this.props.shelfChange(this.props.bookId, event)}>
+      <select value={this.state.selected} onChange={(event) => this.props.shelfChange(this.props.bookId, event)}>
         <option value="none" disabled>Move to...</option>
-        {this.props.shelves.map(shelf => (
+        {this.props.allShelves.map(shelf => (
           <option value={shelf.key} key={shelf.key}>{shelf.title}</option>
         ))}
       </select>
@@ -15,7 +22,7 @@ class ShelfChanger extends Component {
 }
 
 ShelfChanger.defaultProps = {
-  selected: 'none'
+  selected: "none"
 }
 
 // ShelfChanger.propTypes = {
@@ -31,7 +38,7 @@ class Book extends Component {
           <div className="book-shelf-changer">
             <ShelfChanger
               selected={this.props.shelf}
-              shelves={this.props.shelves}
+              allShelves={this.props.allShelves}
               bookId={this.props.book.id}
               shelfChange={this.props.shelfChange}>
             </ShelfChanger>

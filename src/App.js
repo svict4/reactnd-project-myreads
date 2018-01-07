@@ -9,7 +9,7 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shelves: [
+      allShelves: [
         { title: "Currently Reading", key: "currentlyReading" },
         { title: "Want to Read", key: "wantToRead" },
         { title: "Read", key: "read" },
@@ -39,19 +39,25 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path='/search' render={() => <Search books={this.state.books} shelves={this.state.shelves} shelfChange={this.shelfChange} ></Search>} />
+        <Route path='/search' render={() =>
+          <Search
+            books={this.state.books}
+            allShelves={this.state.allShelves}
+            shelfChange={this.shelfChange} >
+          </Search>
+        } />
         <Route exact path='/' render={() => (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            {this.state.shelves.filter((shelf) => shelf.key !== "none").map((shelf) => (
+            {this.state.allShelves.filter((shelf) => shelf.key !== "none").map((shelf) => (
               <Shelf
                 key={shelf.key}
-                shelf={shelf.key}
                 title={shelf.title}
+                allBooks={this.state.books}
                 books={this.state.books.filter(book => book.shelf === shelf.key)}
-                shelves={this.state.shelves}
+                allShelves={this.state.allShelves}
                 shelfChange={this.shelfChange}>
               </Shelf>
             ))}

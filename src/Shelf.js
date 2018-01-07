@@ -13,8 +13,8 @@ class Shelf extends Component {
                 <Book
                   book={book}
                   key={book.id}
-                  shelves={this.props.shelves}
-                  shelf={this.props.allBooks && this.props.allBooks.find(f => f.id === book.id)}
+                  allShelves={this.props.allShelves}
+                  shelf={this.props.allBooks && this.props.allBooks.find(f => f.id === book.id) && this.props.allBooks.find(f => f.id === book.id).shelf}
                   shelfChange={this.props.shelfChange}>
                 </Book>
               ))}
