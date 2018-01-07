@@ -1,16 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-ShelfChanger.defaultProps = {
-  selected: "none"
-}
-
-ShelfChanger.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  selected: PropTypes.string,
-  allShelves: PropTypes.object.isRequired
-}
-
 /**
 * @description Represents the dropdown options on a Book class
 * @constructor
@@ -36,11 +26,14 @@ class ShelfChanger extends Component {
   }
 }
 
-Book.propTypes = {
-  book: PropTypes.object.isRequired,
-  allShelves: PropTypes.object.isRequired,
-  shelf: PropTypes.string,
-  shelfChange: PropTypes.func.isRequired
+ShelfChanger.defaultProps = {
+  selected: "none"
+}
+
+ShelfChanger.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selected: PropTypes.string,
+  allShelves: PropTypes.object.isRequired
 }
 
 /**
@@ -66,6 +59,13 @@ class Book extends Component {
       </div>
     );
   }
+}
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  allShelves: PropTypes.object.isRequired,
+  shelf: PropTypes.string,
+  shelfChange: PropTypes.func.isRequired
 }
 
 export default Book;

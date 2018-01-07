@@ -4,12 +4,6 @@ import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import Shelf from './Shelf'
 
-Search.propTypes = {
-  books: PropTypes.object.isRequired,
-  allShelves: PropTypes.object.isRequired,
-  shelfChange: PropTypes.func.isRequired
-}
-
 /**
 * @description Defines the Search route/page
 * @constructor
@@ -64,6 +58,12 @@ class Search extends Component {
       </div>
     )
   }
+}
+
+Search.propTypes = {
+  books: PropTypes.object.isRequired,
+  allShelves: PropTypes.object.isRequired,
+  shelfChange: PropTypes.func.isRequired
 }
 
 export default Search;
