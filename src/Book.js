@@ -1,6 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
+ShelfChanger.defaultProps = {
+  selected: "none"
+}
+
+ShelfChanger.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selected: PropTypes.string,
+  allShelves: PropTypes.object.isRequired
+}
+
+/**
+* @description Represents the dropdown options on a Book class
+* @constructor
+*/
 class ShelfChanger extends Component {
   constructor(props) {
     super(props)
@@ -13,6 +27,7 @@ class ShelfChanger extends Component {
     return (
       <select value={this.state.selected} onChange={(event) => this.props.shelfChange(this.props.bookId, event)}>
         <option value="none" disabled>Move to...</option>
+        {/* dynamically list all of the shelves */}
         {this.props.allShelves.map(shelf => (
           <option value={shelf.key} key={shelf.key}>{shelf.title}</option>
         ))}
@@ -21,14 +36,16 @@ class ShelfChanger extends Component {
   }
 }
 
-ShelfChanger.defaultProps = {
-  selected: "none"
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  allShelves: PropTypes.object.isRequired,
+  shelf: PropTypes.string,
+  shelfChange: PropTypes.func.isRequired
 }
 
-// ShelfChanger.propTypes = {
-//   onChange: PropTypes.func.isRequired
-// }
-
+/**
+* @description Represents a single book
+*/
 class Book extends Component {
   render() {
     return (

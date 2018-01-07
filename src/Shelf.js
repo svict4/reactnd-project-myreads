@@ -1,6 +1,19 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Book from './Book'
 
+Shelf.propTypes = {
+  title: PropTypes.string,
+  book: PropTypes.object.isRequired,
+  allShelves: PropTypes.object.isRequired,
+  allBooks: PropTypes.object,
+  shelf: PropTypes.string,
+  shelfChange: PropTypes.func.isRequired
+}
+
+/**
+* @description Represents a single shelf which is on a bookshelf (that can have multiple shelves)
+*/
 class Shelf extends Component {
   render() {
     return (

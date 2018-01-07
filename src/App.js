@@ -9,6 +9,7 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // list shelves here so that it can be dynamically updated
       allShelves: [
         { title: "Currently Reading", key: "currentlyReading" },
         { title: "Want to Read", key: "wantToRead" },
@@ -19,15 +20,20 @@ class BooksApp extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     BooksAPI.getAll().then((books) => this.setState({
       books: books
     }))
   }
 
+  /**
+  * @description Changes shelf that book is on
+  * @param {string} id
+  * @param {Object} event
+  */
   shelfChange = (id, event) => {
     const newShelf = event.target.value
-    BooksAPI.update({id}, newShelf).then(() => {
+    BooksAPI.update({ id }, newShelf).then(() => {
       BooksAPI.getAll().then((books) => {
         this.setState({
           books: books

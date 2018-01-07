@@ -1,14 +1,25 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import Shelf from './Shelf'
 
+Search.propTypes = {
+  books: PropTypes.object.isRequired,
+  allShelves: PropTypes.object.isRequired,
+  shelfChange: PropTypes.func.isRequired
+}
+
+/**
+* @description Defines the Search route/page
+* @constructor
+*/
 class Search extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      searchString: '',
+      searchString: "",
       searchedBooks: []
     }
 
@@ -25,7 +36,7 @@ class Search extends Component {
         if (Array.isArray(searchedBooks)) {
           this.setState({
             searchedBooks: searchedBooks
-          });
+          })
         }
       })
     }
@@ -42,7 +53,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            <Shelf 
+            <Shelf
               books={this.state.searchedBooks}
               allBooks={this.props.books}
               allShelves={this.props.allShelves}
