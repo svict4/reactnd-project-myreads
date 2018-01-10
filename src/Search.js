@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 import Shelf from './Shelf'
+import debounce from 'lodash/debounce'
 
 /**
 * @description Defines the Search route/page
@@ -16,28 +17,26 @@ class Search extends Component {
       searchString: "",
       searchedBooks: []
     }
-
-    this.handleChange = this.handleChange.bind(this);
+    
+    this.handleChangeWrapper = this.handleChangeWrapper.bind(this);
+    this.handleChange = debounce(this.handleChange.bind(this), 300)
   }
 
-  componentWillReceiveProps = ({ books }) => {
-    console.log("recieved books: ")
-    console.log(books)
+  handleChangeWrapper(event) {
+    let searchEvent = event.target.value
+    this.setState({ searchString: searchEvent })
+    this.handleChange(searchEvent)
   }
 
-  handleChange(event) {
-    this.setState({ searchString: event.target.value })
-
-    if (event.target.value) {
-      BooksAPI.search(event.target.value, 20).then((searchedBooks) => {
+  handleChange(searchEvent) {
+    let searchedBooks = []
+    if (searchEvent) {
+      BooksAPI.search(searchEvent, 20).then((searchReturn) => {
         //failed searches return an object instead of an array
-        if (Array.isArray(searchedBooks)) {
-          this.setState({
-            searchedBooks: searchedBooks
-          })
-        } else {
-          this.setState({searchedBooks: []})
-        }
+        if (Array.isArray(searchReturn)) {
+          searchedBooks = searchReturn
+        } 
+        this.setState({searchedBooks})
       })
     } else {
       this.setState({searchedBooks: []})
@@ -50,7 +49,7 @@ class Search extends Component {
         <div className="search-books-bar">
           <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
-            <input type="text" value={this.state.searchString} onChange={this.handleChange} placeholder="Search by title or author" />
+            <input type="text" value={this.state.searchString} onChange={this.handleChangeWrapper} placeholder="Search by title or author" />
           </div>
         </div>
         <div className="search-books-results">
@@ -69,8 +68,8 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  books: PropTypes.object.isRequired,
-  allShelves: PropTypes.object.isRequired,
+  books: PropTypes.array.isRequired,
+  allShelves: PropTypes.array.isRequired,
   shelfChange: PropTypes.func.isRequired
 }
 
