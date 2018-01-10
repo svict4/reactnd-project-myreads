@@ -20,19 +20,27 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentWillReceiveProps = ({ books }) => {
+    console.log("recieved books: ")
+    console.log(books)
+  }
+
   handleChange(event) {
     this.setState({ searchString: event.target.value })
 
     if (event.target.value) {
-      // setState isn't a promise, and it seems the search() function runs before the state is set
-      // so I'm just using event.target.value
-      BooksAPI.search(event.target.value).then((searchedBooks) => {
+      BooksAPI.search(event.target.value, 20).then((searchedBooks) => {
+        //failed searches return an object instead of an array
         if (Array.isArray(searchedBooks)) {
           this.setState({
             searchedBooks: searchedBooks
           })
+        } else {
+          this.setState({searchedBooks: []})
         }
       })
+    } else {
+      this.setState({searchedBooks: []})
     }
   }
 
