@@ -31,9 +31,9 @@ ShelfChanger.defaultProps = {
 }
 
 ShelfChanger.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   selected: PropTypes.string,
-  allShelves: PropTypes.object.isRequired
+  allShelves: PropTypes.array.isRequired
 }
 
 /**
@@ -41,21 +41,22 @@ ShelfChanger.propTypes = {
 */
 class Book extends Component {
   render() {
+    const { shelf, allShelves, book, shelfChange } = this.props
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url(" + this.props.book.imageLinks.thumbnail + ")" }}></div>
           <div className="book-shelf-changer">
             <ShelfChanger
-              selected={this.props.shelf}
-              allShelves={this.props.allShelves}
-              bookId={this.props.book.id}
-              shelfChange={this.props.shelfChange}>
+              selected={shelf}
+              allShelves={allShelves}
+              bookId={book.id}
+              shelfChange={shelfChange}>
             </ShelfChanger>
           </div>
         </div>
-        <div className="book-title">{this.props.book.title}</div>
-        <div className="book-authors">{this.props.book.authors}</div>
+        <div className="book-title">{book.title}</div>
+        <div className="book-authors">{book.authors && book.authors.join(' ,')}</div>
       </div>
     );
   }
@@ -63,7 +64,7 @@ class Book extends Component {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  allShelves: PropTypes.object.isRequired,
+  allShelves: PropTypes.array.isRequired,
   shelf: PropTypes.string,
   shelfChange: PropTypes.func.isRequired
 }

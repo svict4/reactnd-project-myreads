@@ -5,17 +5,18 @@ import Search from './Search'
 import Shelf from './Shelf'
 import * as BooksAPI from './BooksAPI'
 
+const allShelves = [
+  { title: "Currently Reading", key: "currentlyReading" },
+  { title: "Want to Read", key: "wantToRead" },
+  { title: "Read", key: "read" },
+  { title: "None", key: "none" }
+]
+
 class BooksApp extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
-      // list shelves here so that it can be dynamically updated
-      allShelves: [
-        { title: "Currently Reading", key: "currentlyReading" },
-        { title: "Want to Read", key: "wantToRead" },
-        { title: "Read", key: "read" },
-        { title: "None", key: "none" }
-      ],
       books: []
     }
   }
@@ -48,7 +49,7 @@ class BooksApp extends React.Component {
         <Route path="/search" render={() =>
           <Search
             books={this.state.books}
-            allShelves={this.state.allShelves}
+            allShelves={allShelves}
             shelfChange={this.shelfChange} >
           </Search>
         } />
@@ -57,13 +58,13 @@ class BooksApp extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            {this.state.allShelves.filter((shelf) => shelf.key !== "none").map((shelf) => (
+            {allShelves.filter((shelf) => shelf.key !== "none").map((shelf) => (
               <Shelf
                 key={shelf.key}
                 title={shelf.title}
                 allBooks={this.state.books}
                 books={this.state.books.filter(book => book.shelf === shelf.key)}
-                allShelves={this.state.allShelves}
+                allShelves={allShelves}
                 shelfChange={this.shelfChange}>
               </Shelf>
             ))}

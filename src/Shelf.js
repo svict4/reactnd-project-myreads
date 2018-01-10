@@ -33,9 +33,9 @@ class Shelf extends Component {
 
 Shelf.propTypes = {
   title: PropTypes.string,
-  book: PropTypes.object.isRequired,
-  allShelves: PropTypes.object.isRequired,
-  allBooks: PropTypes.object,
+  books: PropTypes.array.isRequired,
+  allShelves: PropTypes.array.isRequired,
+  allBooks: PropTypes.array,
   shelf: PropTypes.string,
   shelfChange: PropTypes.func.isRequired
 }
